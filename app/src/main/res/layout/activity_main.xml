@@ -122,6 +122,7 @@
         app:tint="@color/color_primary_alt"
         app:layout_constraintBottom_toTopOf="@id/layoutQuickActions"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/layoutQuickActions"/>
+        app:layout_constraintTop_toTopOf="@id/layoutQuickActions"
+        android:contentDescription="@string/app_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
