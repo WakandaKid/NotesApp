@@ -1,5 +1,6 @@
 package com.giko.notesapp.adapters;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.giko.notesapp.R;
 import com.giko.notesapp.entities.Note;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
@@ -55,6 +57,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
         TextView tvTitle, tvSubtitle, tvDateTime;
         LinearLayout layoutNote;
+        RoundedImageView rImageView;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +65,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             tvSubtitle = itemView.findViewById(R.id.tvSubtitle);
             tvDateTime = itemView.findViewById(R.id.tvDateTime);
             layoutNote = itemView.findViewById(R.id.layoutNote);
+            rImageView = itemView.findViewById(R.id.rImageNote);
         }
 
         public void setNote(Note note){
@@ -81,6 +85,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
                 gradientDrawable.setColor(Color.parseColor(note.getColor()));
             }else {
                 gradientDrawable.setColor(Color.parseColor("#333333"));
+            }
+
+            if (note.getImagePath() != null){
+                rImageView.setImageBitmap(BitmapFactory.decodeFile(note.getImagePath()));
+                rImageView.setVisibility(View.VISIBLE);
+            }else {
+                rImageView.setVisibility(View.GONE);
             }
         }
     }
