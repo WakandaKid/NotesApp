@@ -4,9 +4,14 @@
     <string name="search_notes">Search Notes</string>
     <string name="note_title">Note Title</string>
     <string name="note_subtitle">Note Subtitle</string>
-    <string name="type_note_here">Type Note Here...</string>
+    <string name="type_note_here">Type Note Here…</string>
     <string name="empty_subtitle">Empty Subtitle</string>
     <string name="miscellaneous">Miscellaneous</string>
     <string name="pick_color">Pick A Color</string>
     <string name="add_image">Add Image</string>
+    <string name="add_url">Add Url</string>
+    <string name="add_url_semi_caps">Add URL</string>
+    <string name="enter_url">Enter Url</string>
+    <string name="add">ADD</string>
+    <string name="cancel">CANCEL</string>
 </resources>
