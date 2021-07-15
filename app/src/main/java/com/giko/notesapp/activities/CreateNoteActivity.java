@@ -11,6 +11,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -59,6 +60,8 @@ public class CreateNoteActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     private static final int REQUEST_CODE_SELECT_IMAGE = 2;
 
+    private Note alreadyExistingNote;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +103,32 @@ public class CreateNoteActivity extends AppCompatActivity {
         selectedNoteColor = "#333333";
         selectedImagePath = "";
 
+
+        if (getIntent().getBooleanExtra("isViewOrUpdate", false)){
+            alreadyExistingNote = (Note) getIntent().getSerializableExtra("note");
+            setViewOrUpdateNote();
+        }
+
         startMisc();
         setSubtitleIndicatorColor();
+    }
+
+    private void setViewOrUpdateNote(){
+        inputNoteTitle.setText(alreadyExistingNote.getTitle());
+        inputNoteSubtitle.setText(alreadyExistingNote.getSubtitle());
+        inputNoteText.setText(alreadyExistingNote.getNoteText());
+        txtDateTime.setText(alreadyExistingNote.getDateTime());
+
+        if (alreadyExistingNote.getImagePath() != null && !alreadyExistingNote.getImagePath().trim().isEmpty()){
+            imageNote.setImageBitmap(BitmapFactory.decodeFile(alreadyExistingNote.getImagePath()));
+            imageNote.setVisibility(View.VISIBLE);
+            selectedImagePath  = alreadyExistingNote.getImagePath();
+        }
+
+        if (alreadyExistingNote.getWebLink() != null && !alreadyExistingNote.getWebLink().trim().isEmpty()){
+            txtWebURL.setText(alreadyExistingNote.getWebLink());
+            layoutWebURL.setVisibility(View.VISIBLE);
+        }
     }
 
     private void saveNote(){
@@ -125,6 +152,11 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         if (layoutWebURL.getVisibility() == View.VISIBLE){
             note.setWebLink(txtWebURL.getText().toString());
+        }
+
+        //Setting the ID of new note from an already existing note
+        if (alreadyExistingNote != null){
+            note.setId(alreadyExistingNote.getId());
         }
 
         @SuppressLint("StaticFieldLeak")
@@ -233,6 +265,23 @@ public class CreateNoteActivity extends AppCompatActivity {
                 setSubtitleIndicatorColor();
             }
         });
+
+        if (alreadyExistingNote != null && alreadyExistingNote.getColor() != null && alreadyExistingNote.getColor().trim().isEmpty()){
+            switch (alreadyExistingNote.getColor()){
+                case "#FDBE3B":
+                    layoutMisc.findViewById(R.id.viewCol2).performClick();
+                    break;
+                case "#FF4842":
+                    layoutMisc.findViewById(R.id.viewCol3).performClick();
+                    break;
+                case "#3A52Fc":
+                    layoutMisc.findViewById(R.id.viewCol4).performClick();
+                    break;
+                case "#000000":
+                    layoutMisc.findViewById(R.id.viewCol5).performClick();
+                    break;
+            }
+        }
 
         layoutMisc.findViewById(R.id.layoutAddImage).setOnClickListener(new View.OnClickListener() {
             @Override
