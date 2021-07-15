@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
 
     public static final int REQUEST_CODE_ADD_NOTE = 1;
     public static final int REQUEST_CODE_UPDATE_NOTE = 2;
+    private static final int REQUEST_CODE_SHOW_NOTES = 3;
 
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
@@ -58,10 +59,10 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         notesAdapter = new NotesAdapter(noteList, this);
         notesRecyclerView.setAdapter(notesAdapter);
 
-        getNotes();
+        getNotes(REQUEST_CODE_SHOW_NOTES);
     }
 
-    private void getNotes(){
+    private void getNotes(final int requestCode){
 
         @SuppressLint("StaticFieldLeak")
         class GetNotesTask extends AsyncTask<Void, Void, List<Note>> {
@@ -76,15 +77,18 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
             protected void onPostExecute(List<Note> notes) {
                 super.onPostExecute(notes);
 
-                if (noteList.size() == 0){
+                if (requestCode == REQUEST_CODE_SHOW_NOTES){
                     noteList.addAll(notes);
                     notesAdapter.notifyDataSetChanged();
-                }else {
+                }else if (requestCode == REQUEST_CODE_ADD_NOTE){
                     noteList.add(0, notes.get(0));
                     notesAdapter.notifyItemInserted(0);
+                    notesRecyclerView.smoothScrollToPosition(0);
+                }else if (requestCode == REQUEST_CODE_UPDATE_NOTE){
+                    noteList.remove(noteClickedPosition);
+                    noteList.add(noteClickedPosition, notes.get(noteClickedPosition));
+                    notesAdapter.notifyItemChanged(noteClickedPosition);
                 }
-
-                notesRecyclerView.smoothScrollToPosition(0);
             }
         }
 
@@ -105,7 +109,9 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK){
-            getNotes();
+            getNotes(REQUEST_CODE_ADD_NOTE);
+        }else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
+            getNotes(REQUEST_CODE_UPDATE_NOTE);
         }
     }
 }
