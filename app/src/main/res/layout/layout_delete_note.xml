@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutDeleteNoteContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_background">
+
+    <ImageView
+        android:id="@+id/imgDeleteNote"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:src="@drawable/ic_delete"
+        app:tint="@color/white"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:text="@string/delete_note"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
+        android:fontFamily="@font/ubuntu_bold"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toEndOf="@id/imgDeleteNote"
+        app:layout_constraintTop_toTopOf="@id/imgDeleteNote"
+        app:layout_constraintBottom_toBottomOf="@id/imgDeleteNote"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/txtDeleteNoteMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:text="@string/delete_note_confirmation"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:includeFontPadding="false"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_8sdp"
+        app:layout_constraintTop_toBottomOf="@id/imgDeleteNote"/>
+
+    <TextView
+        android:id="@+id/txtDeleteNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:text="@string/delete_note"
+        android:textColor="@color/delete_button_color"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/ubuntu_medium"
+        android:textAllCaps="true"
+        android:includeFontPadding="false"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintTop_toBottomOf="@id/txtDeleteNoteMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/txtCancelDeleteNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:text="@string/cancel"
+        android:textColor="@color/color_accent_alt"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/ubuntu_medium"
+        android:includeFontPadding="false"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintTop_toBottomOf="@id/txtDeleteNoteMessage"
+        app:layout_constraintEnd_toStartOf="@id/txtDeleteNote"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
