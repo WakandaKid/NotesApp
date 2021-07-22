@@ -2,6 +2,7 @@ package com.giko.notesapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -14,6 +15,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,7 +23,9 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
     private NotesAdapter notesAdapter;
 
     private int noteClickedPosition = -1;
+
+    private AlertDialog dialogAddURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +126,14 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
                 }
             }
         });
+
+        findViewById(R.id.imgAddWebLink).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddURLDialog();
+            }
+        });
+
     }
 
     private void selectImage(){
@@ -233,5 +247,53 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
                 }
             }
         }
+    }
+
+    private void showAddURLDialog(){
+        if (dialogAddURL == null){
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+            View view = LayoutInflater.from(this).inflate(
+                    R.layout.layout_add_url,
+                    (ViewGroup) findViewById(R.id.layoutAddUrlContainer)
+            );
+
+            builder.setView(view);
+            dialogAddURL = builder.create();
+
+            if (dialogAddURL.getWindow() != null){
+                dialogAddURL.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            final EditText edtInputURL = view.findViewById(R.id.edtInputUrl);
+            edtInputURL.requestFocus();
+
+            view.findViewById(R.id.txtAddButton).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (edtInputURL.getText().toString().trim().isEmpty()){
+                        Toast.makeText(MainActivity.this, "Enter URL", Toast.LENGTH_SHORT).show();
+                    }
+                    /*else if (!Patterns.WEB_URL.matcher(edtInputURL.getText().toString()).matches()){
+                        Toast.makeText(CreateNoteActivity.this, "Enter Valid URL", Toast.LENGTH_SHORT).show();
+                    }*/else {
+                        dialogAddURL.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+                        intent.putExtra("isFromQuickActions", true);
+                        intent.putExtra("quickActionType", "URL");
+                        intent.putExtra("URL", edtInputURL.getText().toString());
+                        startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
+                    }
+                }
+            });
+
+            view.findViewById(R.id.txtCancelButton).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogAddURL.dismiss();
+                }
+            });
+        }
+        dialogAddURL.show();
     }
 }
