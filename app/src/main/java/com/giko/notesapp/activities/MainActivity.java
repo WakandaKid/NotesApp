@@ -1,21 +1,30 @@
 package com.giko.notesapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.giko.notesapp.R;
 import com.giko.notesapp.adapters.NotesAdapter;
@@ -24,13 +33,16 @@ import com.giko.notesapp.entities.Note;
 import com.giko.notesapp.listeners.NotesListener;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NotesListener {
 
     public static final int REQUEST_CODE_ADD_NOTE = 1;
     public static final int REQUEST_CODE_UPDATE_NOTE = 2;
-    private static final int REQUEST_CODE_SHOW_NOTES = 3;
+    public static final int REQUEST_CODE_SHOW_NOTES = 3;
+    public static final int REQUEST_CODE_SELECT_IMAGE = 4;
+    public static final int REQUEST_CODE_STORAGE_PERMISSION = 5;
 
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
@@ -44,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         setContentView(R.layout.activity_main);
 
         ImageView imgAddNoteMain = findViewById(R.id.imgAddNoteMain);
+        ImageView imgAddNote = findViewById(R.id.imgAddNote);
+        ImageView imgAddImage = findViewById(R.id.imgAddImage);
+        ImageView imgAddWebLink = findViewById(R.id.imgAddWebLink);
 
         imgAddNoteMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +98,64 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
                 }
             }
         });
+
+        imgAddNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getApplicationContext(), CreateNoteActivity.class),
+                        REQUEST_CODE_ADD_NOTE);
+            }
+        });
+
+        imgAddImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(
+                            MainActivity.this,
+                            new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                            REQUEST_CODE_STORAGE_PERMISSION);
+                }else {
+                    selectImage();
+                }
+            }
+        });
+    }
+
+    private void selectImage(){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        if (intent.resolveActivity(getPackageManager()) != null){
+            startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                selectImage();
+            }else {
+                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private String getPathFromUri(Uri contentUri){
+        String filePath;
+        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+
+        if (cursor == null){
+            filePath = contentUri.getPath();
+        }else {
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndex("_data");
+            filePath = cursor.getString(index);
+            cursor.close();
+        }
+
+        return filePath;
     }
 
     private void getNotes(final int requestCode, final boolean isNoteDeleted){
@@ -140,7 +213,25 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         if (requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK){
             getNotes(REQUEST_CODE_ADD_NOTE, false);
         }else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
-            getNotes(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra("", false));
+            if (data != null){
+                getNotes(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra("isNoteDeleted", false));
+            }
+        }else if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK){
+            if (data != null){
+                Uri selectedImageUri = data.getData();
+                if (selectedImageUri != null){
+                    try {
+                        String selectedImagePath = getPathFromUri(selectedImageUri);
+                        Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+                        intent.putExtra("isFromQuickActions", true);
+                        intent.putExtra("quickActionType", "image");
+                        intent.putExtra("imagePath", selectedImagePath);
+                        startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
+                    }catch (Exception e){
+                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
         }
     }
 }
