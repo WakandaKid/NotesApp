@@ -6,7 +6,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -22,7 +21,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +35,6 @@ import com.giko.notesapp.entities.Note;
 import com.giko.notesapp.listeners.NotesListener;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NotesListener {
@@ -127,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
             }
         });
 
-        findViewById(R.id.imgAddWebLink).setOnClickListener(new View.OnClickListener() {
+        imgAddWebLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAddURLDialog();
