@@ -233,6 +233,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         final ImageView imageCol3 = layoutMisc.findViewById(R.id.imgCol3);
         final ImageView imageCol4 = layoutMisc.findViewById(R.id.imgCol4);
         final ImageView imageCol5 = layoutMisc.findViewById(R.id.imgCol5);
+        final ImageView imageCol6 = layoutMisc.findViewById(R.id.imgCol6);
 
         layoutMisc.findViewById(R.id.viewCol1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,6 +244,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 imageCol3.setImageResource(0);
                 imageCol4.setImageResource(0);
                 imageCol5.setImageResource(0);
+                imageCol6.setImageResource(0);
                 setSubtitleIndicatorColor();
             }
         });
@@ -256,6 +258,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 imageCol3.setImageResource(0);
                 imageCol4.setImageResource(0);
                 imageCol5.setImageResource(0);
+                imageCol6.setImageResource(0);
                 setSubtitleIndicatorColor();
             }
         });
@@ -269,6 +272,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 imageCol3.setImageResource(R.drawable.ic_done);
                 imageCol4.setImageResource(0);
                 imageCol5.setImageResource(0);
+                imageCol6.setImageResource(0);
                 setSubtitleIndicatorColor();
             }
         });
@@ -282,6 +286,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 imageCol3.setImageResource(0);
                 imageCol4.setImageResource(R.drawable.ic_done);
                 imageCol5.setImageResource(0);
+                imageCol6.setImageResource(0);
                 setSubtitleIndicatorColor();
             }
         });
@@ -295,6 +300,21 @@ public class CreateNoteActivity extends AppCompatActivity {
                 imageCol3.setImageResource(0);
                 imageCol4.setImageResource(0);
                 imageCol5.setImageResource(R.drawable.ic_done);
+                imageCol6.setImageResource(0);
+                setSubtitleIndicatorColor();
+            }
+        });
+
+        layoutMisc.findViewById(R.id.viewCol6).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedNoteColor = "#00FFFF";
+                imageCol1.setImageResource(0);
+                imageCol2.setImageResource(0);
+                imageCol3.setImageResource(0);
+                imageCol4.setImageResource(0);
+                imageCol5.setImageResource(0);
+                imageCol6.setImageResource(R.drawable.ic_done);
                 setSubtitleIndicatorColor();
             }
         });
