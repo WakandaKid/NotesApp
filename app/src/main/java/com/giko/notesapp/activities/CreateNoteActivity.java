@@ -86,7 +86,11 @@ public class CreateNoteActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                if (inputNoteText.getText().toString().isEmpty()){
+                    onBackPressed();
+                }else {
+                    saveNote();
+                }
             }
         });
 
@@ -537,5 +541,14 @@ public class CreateNoteActivity extends AppCompatActivity {
             });
         }
         dialogAddURL.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (inputNoteText.getText().toString().isEmpty()){
+            super.onBackPressed();
+        }else {
+            saveNote();
+        }
     }
 }
