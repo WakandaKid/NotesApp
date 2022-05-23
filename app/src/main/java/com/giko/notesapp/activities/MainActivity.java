@@ -19,8 +19,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         ImageView imgAddNoteMain = findViewById(R.id.imgAddNoteMain);
         ImageView imgAddNote = findViewById(R.id.imgAddNote);
         ImageView imgAddImage = findViewById(R.id.imgAddImage);
-        ImageView imgAddWebLink = findViewById(R.id.imgAddWebLink);
 
         imgAddNoteMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,25 +79,6 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
 
         getNotes(REQUEST_CODE_SHOW_NOTES, false);
 
-        EditText inputSearch = findViewById(R.id.inputSearch);
-        inputSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                notesAdapter.cancelTimer();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (noteList.size() != 0){
-                    notesAdapter.searchNotes(s.toString());
-                }
-            }
-        });
 
         imgAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,12 +102,6 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
             }
         });
 
-        imgAddWebLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAddURLDialog();
-            }
-        });
 
     }
 

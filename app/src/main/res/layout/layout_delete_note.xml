@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_10sdp"
     android:layout_gravity="center"
-    android:background="@drawable/dialog_background">
+    android:background="@color/quick_actions_background_color">
 
     <ImageView
         android:id="@+id/imgDeleteNote"

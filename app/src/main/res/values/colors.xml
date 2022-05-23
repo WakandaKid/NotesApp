@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="search_icon_color">#DBDBDB</color>
     <color name="text_hint_color">#7B7B7B</color>
-    <color name="quick_actions_background_color">#2F2D2E</color>
+    <color name="quick_actions_background_color">#000080</color>
     <color name="icons_color">#A4A4A4</color>
     <color name="subtitle_text_color">#CECECE</color>
     <color name="note_subtitle_text_color">#FAFAFA</color>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_primary_alt"
+    android:background="@color/design_default_color_on_primary"
     tools:context=".activities.CreateNoteActivity">
 
     <ScrollView
@@ -50,20 +50,19 @@
                 android:id="@+id/inputNoteTitle"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginTop="20dp"
                 android:background="@null"
-                android:hint="@string/note_title"
                 android:fontFamily="@font/ubuntu_bold"
-                android:inputType="text"
-                android:textColorHint="@color/text_hint_color"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16ssp"
+                android:hint="@string/note_title"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:includeFontPadding="false"
-                app:layout_constraintTop_toBottomOf="@id/imgBack"/>
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_hint_color"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintTop_toBottomOf="@id/imgBack"
+                tools:layout_editor_absoluteX="16dp" />
 
             <TextView
                 android:id="@+id/txtDateTime"
@@ -81,23 +80,23 @@
                 android:id="@+id/inputNoteSubtitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:background="@null"
-                android:hint="@string/note_subtitle"
-                android:textSize="@dimen/_13ssp"
-                android:textColorHint="@color/text_hint_color"
-                android:textColor="@color/subtitle_text_color"
                 android:fontFamily="@font/ubuntu_medium"
-                android:inputType="textMultiLine"
+                android:hint="@string/note_subtitle"
                 android:importantForAutofill="no"
                 android:includeFontPadding="false"
+                android:inputType="textMultiLine"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
-                app:layout_constraintTop_toBottomOf="@id/txtDateTime"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_hint_color"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/viewSubtitleIndicator"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/txtDateTime" />
 
             <View
                 android:id="@+id/viewSubtitleIndicator"
@@ -173,22 +172,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:background="@null"
-                android:hint="@string/type_note_here"
                 android:fontFamily="@font/ubuntu_regular"
-                android:textColorHint="@color/text_hint_color"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_13ssp"
-                android:inputType="textMultiLine"
-                android:minHeight="@dimen/_100sdp"
                 android:gravity="top"
+                android:hint="@string/type_note_here"
                 android:importantForAutofill="no"
                 android:includeFontPadding="false"
+                android:inputType="textMultiLine"
+                android:minHeight="@dimen/_100sdp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_hint_color"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutWebURL"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                tools:layout_editor_absoluteX="16dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

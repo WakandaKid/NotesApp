@@ -359,14 +359,6 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         });
 
-        layoutMisc.findViewById(R.id.layoutAddUrl).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                showAddURLDialog();
-            }
-        });
-
         if (alreadyExistingNote != null){
             layoutMisc.findViewById(R.id.layoutDeleteNote).setVisibility(View.VISIBLE);
             layoutMisc.findViewById(R.id.layoutDeleteNote).setOnClickListener(new View.OnClickListener() {
